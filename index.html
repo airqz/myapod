@@ -1,0 +1,62 @@
+---
+layout: default
+title: R
+---
+
+		<div class="blurb">
+			<h1>Salut, je suis Rodolphe</h1>
+			<p>Voir le Chat en Live<a href="./chat/"> (Lien de la Demo ...)</a></p>
+	</div> 
+  <hr size=1 align=center width=98%>
+			<h2>L'Astronomy Picture of the Day</h2>
+
+
+
+
+<!--
+			<b>API URL:</b>
+ <pre id="reqObject"></pre> -->
+  
+
+
+  
+  <img id="apod_img_id" width="800px"/>
+  
+  <iframe id="apod_vid_id" type="text/html" width="800" height="600" frameborder="0"></iframe>
+  <p id="copyright"></p>
+  <h3 id="apod_title"></h3>
+  <p id="apod_explaination"></p>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript">
+	
+	var url = "https://api.nasa.gov/planetary/apod?api_key=nlLS7e7dUtu3PbfESDJoFmlsiFgYRVEO0hpxXSrk";
+
+
+$.ajax({
+  url: url,
+  success: function(result){
+  if("copyright" in result) {
+    $("#copyright").text("Image Credits: " + result.copyright);
+  }
+  else {
+    $("#copyright").text("Image Credits: " + "Public Domain");
+  }
+  
+  if(result.media_type == "video") {
+    $("#apod_img_id").css("display", "none"); 
+    $("#apod_vid_id").attr("src", result.url);
+  }
+  else {
+    $("#apod_vid_id").css("display", "none"); 
+    $("#apod_img_id").attr("src", result.url);
+  }
+  $("#reqObject").text(url);
+  $("#returnObject").text(JSON.stringify(result, null, 4));  
+  $("#apod_explaination").text(result.explanation);
+  $("#apod_title").text(result.title);
+}
+});
+</script>
+
+<hr size=1 align=center width=98%>
